@@ -20,7 +20,7 @@ public class Rank {
     private final SimpleLongProperty aika;
 
     public Rank(int sijoitus, String pelaaja, long aika) {
-        this.sijoitus = new SimpleIntegerProperty();
+        this.sijoitus = new SimpleIntegerProperty(sijoitus);
         this.pelaaja = new SimpleStringProperty(pelaaja);
         this.aika = new SimpleLongProperty(aika);
     }
@@ -43,5 +43,9 @@ public class Rank {
 
     public int getSijoitus() {
         return sijoitus.get();
+    }
+    
+    public long getAika() {
+        return aika.get();
     }
 }

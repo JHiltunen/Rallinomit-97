@@ -7,7 +7,9 @@ package rallinomit;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
@@ -37,14 +39,18 @@ public class LeaderboardPane extends AnchorPane {
     @FXML
     private ComboBox<String> hakuFiltteri;
 
-    private ArrayList<Rank> tuloksetTiedostosta;
+    private ObservableList<Rank> tuloksetTiedostosta;
 
     public LeaderboardPane() {
         this.tulosTaulukko = new TableView();
-        this.pelaajaSarake = new TableColumn("Rank");
-        this.sijoitusSarake = new TableColumn("Player");
+        
+        this.sijoitusSarake = new TableColumn("Rank");
+        
+        this.pelaajaSarake = new TableColumn("Player");
+        
         this.aikaSarake = new TableColumn("Time");
-        this.tuloksetTiedostosta = new ArrayList<>();
+        
+        this.tuloksetTiedostosta = FXCollections.observableArrayList();
 
         this.hakuKentta = new TextField();
         this.hakuFiltteri = new ComboBox<>(FXCollections.observableArrayList("LandeRally", "MikkoRally", "DatanomiRally"));
@@ -62,19 +68,21 @@ public class LeaderboardPane extends AnchorPane {
 
     @FXML
     private void initialize() {
-        // Aluksi lisätään tulostaulukkoon sarakkeet
-        tulosTaulukko.getColumns().addAll(pelaajaSarake, sijoitusSarake, aikaSarake);
-
-        // Lisätään sarakkeisiin CellFactoryt
-        sijoitusSarake.setCellFactory(new PropertyValueFactory("sijoitus"));
-        pelaajaSarake.setCellFactory(new PropertyValueFactory("pelaaja"));
-        aikaSarake.setCellFactory(new PropertyValueFactory("aika"));
-
-        // Haetaan tiedot tiedostosta
-        tuloksetTiedostosta.add(new Rank(1, "Joonas", System.nanoTime()));
-        tuloksetTiedostosta.add(new Rank(2, "Aleksi R.", System.nanoTime()));
-
-        // Upotetaan lista tulosTaulukon tiedoiksi 
-        tulosTaulukko.setItems(FXCollections.observableList(tuloksetTiedostosta));
+        
+        // lisätään taulukkoon data        
+        // tässä kohtaa pitäisi lukea tiedostosta (alla on vain demo dataa)
+        tuloksetTiedostosta.add(new Rank(1, "Joobas", 50));
+        tuloksetTiedostosta.add(new Rank(2, "Petteri", 100));
+        tuloksetTiedostosta.add(new Rank(3, "Mikko", 150));
+        tuloksetTiedostosta.add(new Rank(4, "Matti", 180));
+        tuloksetTiedostosta.add(new Rank(5, "Teppo", 210));
+        tulosTaulukko.setItems(tuloksetTiedostosta);
+        /*
+        lisätään jokaiselle solulle CellValueFactory
+        Javadocista: The cell factory is responsible for rendering the data contained within each TableCell for a single table column.
+        */
+        this.sijoitusSarake.setCellValueFactory(new PropertyValueFactory("sijoitus"));
+        this.pelaajaSarake.setCellValueFactory(new PropertyValueFactory("pelaaja"));
+        this.aikaSarake.setCellValueFactory(new PropertyValueFactory("aika"));
     }
 }
