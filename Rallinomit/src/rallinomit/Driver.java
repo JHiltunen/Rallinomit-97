@@ -21,6 +21,10 @@ public enum Driver {
     private final String hobby;
     private final String info;
 
+    /*
+    Konstruktori Driver enumille. Esim. Driver.Joonas kutsutaan Driver enumin konstruktoria Jokainen enum vakio on olio, jonka takia tarvitsemme konstruktorin.
+    Normaaliin tapaan oliolla on omat muuttujansa.
+    */
     Driver(String nimi, String ika, String harrastus, String tieto) {
         name = nimi;
         age = ika;
@@ -28,30 +32,51 @@ public enum Driver {
         info = tieto;
     }
 
+    /*
+    Palautetaan Joonas enum.
+    */
     public static Driver getJOONAS() {
         return JOONAS;
     }
 
+    /*
+    Palautetaan Tavi enum.
+    */
     public static Driver getTAVI() {
         return TAVI;
     }
 
+    /*
+    Palautetaan Aleksi enum.
+    */
     public static Driver getALEKSI() {
         return ALEKSI;
     }
 
+    /*
+    Palautetaan kutsutun enum vakion nimi.
+    */
     public String getName() {
         return name;
     }
 
+    /*
+    Palautetaan kutsutun enum vakion ikä.
+    */
     public String getAge() {
         return age;
     }
 
+    /*
+    Palautetaan kutsutun enum vakion harrastus.
+    */
     public String getHobby() {
         return hobby;
     }
 
+    /*
+    Palautetaan kutsutun enum vakion "tarina" eli info
+    */
     public String getInfo() {
         return info;
     }
