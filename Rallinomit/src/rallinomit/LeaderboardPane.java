@@ -6,12 +6,11 @@
 package rallinomit;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +24,9 @@ import javafx.scene.layout.AnchorPane;
  */
 public class LeaderboardPane extends AnchorPane {
 
+    @FXML
+    private Button backButton;
+    
     @FXML
     private TableView<Rank> tulosTaulukko;
     @FXML
@@ -68,6 +70,10 @@ public class LeaderboardPane extends AnchorPane {
 
     @FXML
     private void initialize() {
+        
+        backButton.setOnAction((event) -> {
+            PaneUtils.vaihdaIkkuna(this, new MainMenuPane());
+        });
         
         // lisätään taulukkoon data        
         // tässä kohtaa pitäisi lukea tiedostosta (alla on vain demo dataa)

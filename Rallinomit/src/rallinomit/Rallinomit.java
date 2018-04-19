@@ -19,10 +19,10 @@ public class Rallinomit extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenuPane.fxml"));
-
+        MainMenuPane root = new MainMenuPane();
+        
         Scene scene = new Scene(root);
-
+        
         stage.setScene(scene);
         stage.show();
     }

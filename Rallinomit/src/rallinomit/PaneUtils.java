@@ -15,6 +15,11 @@ import javafx.stage.Stage;
  */
 public class PaneUtils {
 
+    /**
+     * 
+     * @param currentPane Pane (nykyinen, this), josta vaihdetaan seuraavaan paneen
+     * @param nextPane Pane, johon vaihdetaan
+     */
     public static void vaihdaIkkuna(Pane currentPane, Pane nextPane) {
         Stage stage = (Stage) currentPane.getScene().getWindow();
         stage.setScene(new Scene(nextPane));
