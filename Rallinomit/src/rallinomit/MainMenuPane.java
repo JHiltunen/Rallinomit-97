@@ -5,47 +5,116 @@
  */
 package rallinomit;
 
-import java.io.IOException;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import static javafx.application.Application.STYLESHEET_CASPIAN;
+import static javafx.application.Application.STYLESHEET_MODENA;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  *
- * @author s1601378
+ * @author s1500542
  */
-public class MainMenuPane extends AnchorPane {
-    
-    @FXML
-    private Button playButton;
+public class MainMenuPane {
 
-    @FXML
-    private Button leaderboardButton;
+    private BorderPane mainmenuPane;
 
     public MainMenuPane() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MainMenuPane.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
+        this.mainmenuPane = new BorderPane();
 
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
+    }
+
+    public Pane getMainPane() {
+
+        LeaderboardPane leaderboard = new LeaderboardPane();
+
+        mainmenuPane.setPrefSize(640, 400);
+
+        Image lahdeKuva = new Image("file:rallinomi.png");
+
+        PixelReader kuvanLukija = lahdeKuva.getPixelReader();
+
+        int leveys = (int) lahdeKuva.getWidth();
+        int korkeus = (int) lahdeKuva.getHeight();
+
+        WritableImage kohdeKuva = new WritableImage(leveys, korkeus);
+        PixelWriter kuvanKirjoittaja = kohdeKuva.getPixelWriter();
+
+        int yKoordinaatti = 0;
+        while (yKoordinaatti < korkeus) {
+            int xKoordinaatti = 0;
+            while (xKoordinaatti < leveys) {
+
+                Color vari = kuvanLukija.getColor(xKoordinaatti, yKoordinaatti);
+                double punainen = vari.getRed();
+                double vihrea = vari.getGreen();
+                double sininen = vari.getBlue();
+                double lapinakyvyys = vari.getOpacity();
+
+                Color uusiVari = new Color(punainen, vihrea, sininen, lapinakyvyys);
+
+                kuvanKirjoittaja.setColor(xKoordinaatti, yKoordinaatti, uusiVari);
+
+                xKoordinaatti++;
+            }
+
+            yKoordinaatti++;
         }
-    }
 
-    @FXML
-    private void initialize() {
-        // playButtonin toiminnallisuus -- TÄYTETÄÄN MYÖHEMMIN --
-        playButton.setOnAction((ActionEvent event) -> {
+        ImageView kuva = new ImageView(kohdeKuva);
 
+
+        Label title = new Label("Rallinomit '97");
+        title.setFont(Font.font(STYLESHEET_CASPIAN, 25));
+        Label credits = new Label("Aleksi R., Aleksi T. and Joonas H.");
+
+        Button playButton = new Button("Play");
+        playButton.setPadding(new Insets(5, 40, 5, 40));
+        playButton.setFont(Font.font(STYLESHEET_MODENA, 15));
+        Button leaderboardButton = new Button("Leaderboard");
+        leaderboardButton.setPadding(new Insets(5, 40, 5, 40));
+        leaderboardButton.setFont(Font.font(STYLESHEET_MODENA, 15));
+
+
+        VBox buttons = new VBox();
+
+        buttons.setSpacing(10);
+        buttons.setPadding(new Insets(10, 10, 10, 10));
+        buttons.setAlignment(Pos.BOTTOM_LEFT);
+        buttons.getChildren().add(playButton);
+        buttons.getChildren().add(leaderboardButton);
+
+
+        VBox info = new VBox();
+        info.setSpacing(4);
+        info.setPadding(new Insets(10, 10, 10, 10));
+        info.setAlignment(Pos.TOP_LEFT);
+        info.getChildren().add(title);
+        info.getChildren().add(credits);
+
+        //        mainmenuPane.setPadding(new Insets(110, 110, 110, 110));    
+        mainmenuPane.getChildren().add(kuva);
+        mainmenuPane.setBottom(buttons);
+        mainmenuPane.setTop(info);
+
+
+        leaderboardButton.setOnAction((event) -> {
+
+            PaneUtils.vaihdaIkkuna(mainmenuPane, leaderboard.getLeaderboardPane());
         });
 
-        // leaderboardButtonin toiminallisuus
-        leaderboardButton.setOnAction((ActionEvent event) -> {
-            PaneUtils.vaihdaIkkuna(this, new LeaderboardPane());
-        });
+        return mainmenuPane;
     }
+
 }

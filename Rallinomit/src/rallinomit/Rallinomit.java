@@ -6,25 +6,27 @@
 package rallinomit;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
  *
- * @author Aleksi Rautiainen
+ * @author s1500542
  */
 public class Rallinomit extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
-        MainMenuPane root = new MainMenuPane();
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) {
+        MainMenuPane mainmenu = new MainMenuPane();
+        LeaderboardPane leaderboard = new LeaderboardPane();
+
+        Scene scene = new Scene(mainmenu.getMainPane());
+
+        primaryStage.setTitle("Rallinomit '97");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+
     }
 
     /**
